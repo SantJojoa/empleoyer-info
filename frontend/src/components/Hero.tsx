@@ -1,6 +1,66 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Search } from "lucide-react";
+import { useUser } from "../contexts/UserContext";
 
 export default function Hero() {
+    const { isAuthenticated, user } = useUser();
+    const [searchId, setSearchId] = useState("");
+
+    // Debug: verificar el estado de autenticación
+    console.log("Hero - isAuthenticated:", isAuthenticated);
+    console.log("Hero - user:", user);
+
+    const handleSearch = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (searchId.trim()) {
+            // Aquí implementarías la lógica de búsqueda
+            console.log("Buscando empleado con cédula:", searchId);
+            alert(`Buscando empleado con cédula: ${searchId}`);
+        }
+    };
+
+    if (isAuthenticated) {
+        return (
+            <main className="flex-1 flex flex-col items-center justify-center text-center px-6 py-16">
+                <div className="max-w-4xl mx-auto">
+                    <h2 className="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-6 leading-tight">
+                        Buscar Empleado
+                    </h2>
+
+                    <p className="text-lg md:text-xl text-gray-300 max-w-3xl mb-12 leading-relaxed">
+                        Hola {user?.firstName}, ingresa la cédula del empleado que deseas consultar para verificar su historial laboral y tomar decisiones informadas.
+                    </p>
+
+                    <form onSubmit={handleSearch} className="max-w-2xl mx-auto">
+                        <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <Search className="h-6 w-6 text-gray-400" />
+                            </div>
+                            <input
+                                type="text"
+                                value={searchId}
+                                onChange={(e) => setSearchId(e.target.value)}
+                                placeholder="Ingresa la cédula del empleado"
+                                className="w-full pl-12 pr-4 py-4 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 text-lg"
+                            />
+                            <button
+                                type="submit"
+                                className="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-lg font-semibold hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 hover:scale-105"
+                            >
+                                Buscar
+                            </button>
+                        </div>
+                    </form>
+
+                    <div className="mt-8 text-sm text-gray-400">
+                        <p>💡 Tip: Asegúrate de ingresar la cédula completa y correcta</p>
+                    </div>
+                </div>
+            </main>
+        );
+    }
+
     return (
         <main className="flex-1 flex flex-col items-center justify-center text-center px-6 py-16">
             <div className="max-w-4xl mx-auto">

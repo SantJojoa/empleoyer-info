@@ -1,10 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import SubscriptionSelector from "./SubscriptionSelector";
+import { useUser } from "../contexts/UserContext";
 
 
 
 export default function RegisterForm() {
+    const navigate = useNavigate();
+    const { login } = useUser();
 
     const [form, setForm] = useState({
         firstName: "",
@@ -39,14 +43,15 @@ export default function RegisterForm() {
                 password: form.password,
             });
 
-            // 3️⃣ Guardar token
-            localStorage.setItem('token', loginRes.data.token);
-            console.log("TOKEN", loginRes.data.token);
+            // 3️⃣ Guardar en contexto
+            login(loginRes.data.user, loginRes.data.token);
 
             // 4️⃣ Preguntar si quiere suscribirse
             const wantsPlan = window.confirm("¿Desea suscribirse a un plan?");
             if (wantsPlan) {
                 setShowSubscription(true);
+            } else {
+                navigate('/');
             }
         } catch (error) {
             console.log(error);
@@ -58,9 +63,9 @@ export default function RegisterForm() {
 
     return (
         <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-md w-full space-y-8">
-                <div className="bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-700/50 p-8 transform hover:scale-[1.02] transition-all duration-300">
-                    {!showSubscription ? (
+            {!showSubscription ? (
+                <div className="max-w-md w-full space-y-8">
+                    <div className="bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-700/50 p-8 transform hover:scale-[1.02] transition-all duration-300">
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="text-center">
                                 <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-2">
@@ -205,11 +210,11 @@ export default function RegisterForm() {
                                 Crear Cuenta
                             </button>
                         </form>
-                    ) : (
-                        <SubscriptionSelector userEmail={form.email!} selectedPlan={selectedPlan ?? ''} setSelectedPlan={(plan: string) => setSelectedPlan(plan)} />
-                    )}
+                    </div>
                 </div>
-            </div>
+            ) : (
+                <SubscriptionSelector userEmail={form.email!} selectedPlan={selectedPlan ?? ''} setSelectedPlan={(plan: string) => setSelectedPlan(plan)} />
+            )}
         </div>
 
 
