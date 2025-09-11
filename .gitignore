@@ -1,0 +1,58 @@
+# Node.js
+node_modules
+dist
+build
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Env files
+.env
+.env.local
+
+# Editor
+.vscode
+.idea
+
+# Dependencias de sistemas operativos
+.DS_Store
+
+# Salida de compilación de TypeScript
+*.tsbuildinfo
+
+# Salida de Vite
+frontend/dist
+
+# Archivos de lock alternativos
+yarn.lock
+pnpm-lock.yaml
+
+# Archivos de configuración de entorno
+.env.development
+.env.production
+
+# Archivos de configuración de Tailwind generados
+tailwind.config.js
+tailwind.config.cjs
+
+# Archivos de cache de npm
+.npm
+
+# Archivos de cache de Vite
+.vite
+
+# Archivos de cache de React
+*.cache
+
+# Archivos de configuración de Prettier y ESLint generados
+.prettier*
+.eslint*
+
+# Archivos de configuración de MacOS
+Icon?
+
+# Archivos de configuración de Windows
+Thumbs.db
+Desktop.ini
