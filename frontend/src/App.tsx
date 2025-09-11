@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
+import RegisterPage from "./pages/Register";
+import SubscriptionSelector from "./components/SubscriptionSelector";
 import React from "react";
 
 function App() {
@@ -7,7 +9,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        {/* Próximamente: login y register */}
+        <Route path="/register" element={<RegisterPage />} />
+
+
       </Routes>
     </BrowserRouter>
   );

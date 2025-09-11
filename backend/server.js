@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const db = require('./models');
 const app = express();
+const cors = require('cors');
 
 const userRoutes = require('./routes/user');
 const employeeRoutes = require('./routes/employees');
@@ -9,6 +10,12 @@ const reportRoutes = require('./routes/reports');
 const searchLogRoutes = require('./routes/searchlogs');
 const subscriptionRoutes = require('./routes/subscriptions');
 const paymentRoutes = require('./routes/payments');
+
+app.use(cors({
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+}));
 
 
 app.use(express.json());
