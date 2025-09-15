@@ -4,6 +4,7 @@ import { Search } from "lucide-react";
 import { useUser } from "../contexts/UserContext";
 import { reportService, type EmployeeWithReports } from "../services/reportService";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 
 export default function Hero() {
@@ -117,7 +118,7 @@ export default function Hero() {
                                             </p>
                                             {r.evidenceUrl && (
                                                 <a
-                                                    href={`htpp://localhost:3000${r.evidenceUrl.replace(/\\/g, '/')}`}
+                                                    href={`${API_BASE_URL}${r.evidenceUrl.replace(/\\/g, '/')}`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="text-blue-400 hover:text-blue-500 underline"

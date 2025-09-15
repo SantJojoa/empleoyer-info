@@ -12,8 +12,19 @@ const searchLogRoutes = require('./routes/searchlogs');
 const subscriptionRoutes = require('./routes/subscriptions');
 const paymentRoutes = require('./routes/payments');
 
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://ts2ze9-ip-161-18-57-123.tunnelmole.net '
+]
+
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: (origin, cb) => {
+        if (!origin) return cb(null, true);
+        if (allowedOrigins.some(a => origin.endsWith('.tunnelmole.net')) || allowedOrigins.includes(origin)) {
+            return cb(null, true);
+        }
+        return cb(new Error('Not allowed by CORS'));
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
 }));

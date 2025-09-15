@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 
 export default function LoginForm() {
     const navigate = useNavigate();
@@ -28,7 +29,7 @@ export default function LoginForm() {
         setError("");
 
         try {
-            const response = await axios.post("http://localhost:3000/users/login", form);
+            const response = await axios.post(`${API_BASE_URL}/users/login`, form);
 
             console.log("LoginForm - Response data:", response.data);
 

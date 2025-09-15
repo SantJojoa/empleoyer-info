@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 import { useNavigate } from "react-router-dom";
 import SubscriptionSelector from "./SubscriptionSelector";
 import { useUser } from "../contexts/UserContext";
@@ -35,7 +36,7 @@ export default function RegisterForm() {
         e.preventDefault();
         try {
             // 1️⃣ Registrar usuario
-            const registerRes = await axios.post("http://localhost:3000/users/register", form);
+            const registerRes = await axios.post(`${API_BASE_URL}/users/register`, form);
             login(registerRes.data.user, registerRes.data.token);
 
             alert("Usuario registrado correctamente");
