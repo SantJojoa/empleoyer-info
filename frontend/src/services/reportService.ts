@@ -39,6 +39,27 @@ export interface CreateReportData {
     evidence: File;
 }
 
+export interface ReportWithEmployer {
+    id: number;
+    description: string;
+    incidentDate: string;
+    city: string;
+    evidenceUrl: string | null;
+    createdAt: string;
+    User: {
+        firstName: string;
+        lastName: string;
+        documentNumber: string;
+        email: string;
+    };
+}
+
+export interface EmployeeWithReports extends Employee {
+    Reports: ReportWithEmployer[];
+}
+
+
+
 class ReportService {
     private getAuthHeaders(token: string) {
         return {
@@ -91,6 +112,23 @@ class ReportService {
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.error || 'Error al crear el reporte');
+        }
+
+        return response.json();
+    }
+
+    async searchEmployeeWithReports(token: string, documentNumber: string): Promise<EmployeeWithReports | null> {
+        const response = await fetch(`${API_BASE_URL}/employees/search/${documentNumber}/reports`, {
+            headers: this.getAuthHeaders(token),
+        });
+
+        if (response.status === 404) {
+            return null;
+        }
+
+        if (!response.ok) {
+            const err = await response.json().catch(() => ({}));
+            throw new Error(err.error || 'Error al buscar empleado con reportes');
         }
 
         return response.json();

@@ -14,6 +14,7 @@ export default function RegisterForm() {
         firstName: "",
         lastName: "",
         email: "",
+        documentNumber: "",
         password: "",
         confirmPassword: "",
         phone: "",
@@ -34,19 +35,11 @@ export default function RegisterForm() {
         e.preventDefault();
         try {
             // 1️⃣ Registrar usuario
-            await axios.post("http://localhost:3000/users/register", form);
+            const registerRes = await axios.post("http://localhost:3000/users/register", form);
+            login(registerRes.data.user, registerRes.data.token);
+
             alert("Usuario registrado correctamente");
 
-            // 2️⃣ Login automático
-            const loginRes = await axios.post("http://localhost:3000/users/login", {
-                email: form.email,
-                password: form.password,
-            });
-
-            // 3️⃣ Guardar en contexto
-            login(loginRes.data.user, loginRes.data.token);
-
-            // 4️⃣ Preguntar si quiere suscribirse
             const wantsPlan = window.confirm("¿Desea suscribirse a un plan?");
             if (wantsPlan) {
                 setShowSubscription(true);
@@ -108,6 +101,19 @@ export default function RegisterForm() {
                                     name="email"
                                     placeholder="tu@email.com"
                                     value={form.email}
+                                    onChange={handleChange}
+                                    className="w-full px-4 py-3 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 bg-gray-700/50 hover:bg-gray-700 focus:bg-gray-700 placeholder-gray-400 text-white"
+                                    required
+                                />
+                            </div>
+
+                            <div className="space-y-1">
+                                <label className="text-sm font-medium text-gray-300">Cédula</label>
+                                <input
+                                    type="text"
+                                    name="documentNumber"
+                                    placeholder="Tu cédula"
+                                    value={form.documentNumber}
                                     onChange={handleChange}
                                     className="w-full px-4 py-3 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 bg-gray-700/50 hover:bg-gray-700 focus:bg-gray-700 placeholder-gray-400 text-white"
                                     required
