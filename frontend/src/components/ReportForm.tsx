@@ -118,7 +118,7 @@ const ReportForm: React.FC<ReportFormProps> = ({ onSubmit, isLoading = false }) 
 
     // Efecto para buscar empleado cuando cambie la cédula (con debounce)
     useEffect(() => {
-        if (debouncedDocumentNumber.trim().length >= 8) {
+        if (debouncedDocumentNumber.trim().length >= 5) {
             searchEmployee(debouncedDocumentNumber);
         } else if (debouncedDocumentNumber.trim().length === 0) {
             // Si la cédula está vacía, limpiar datos
@@ -250,22 +250,37 @@ const ReportForm: React.FC<ReportFormProps> = ({ onSubmit, isLoading = false }) 
                     <label htmlFor="documentNumber" className="block text-sm font-medium text-gray-300 mb-2">
                         Cédula del Empleado *
                     </label>
-                    <div className="relative">
+                    <div className="relative flex gap-2">
                         <input
                             type="text"
                             id="documentNumber"
                             name="documentNumber"
                             value={formData.documentNumber}
                             onChange={handleDocumentNumberChange}
-                            className={`w-full px-3 py-2 bg-gray-700/50 border rounded-md text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.documentNumber ? 'border-red-500' : 'border-gray-600'
+                            className={`flex-1 px-3 py-2 bg-gray-700/50 border rounded-md text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.documentNumber ? 'border-red-500' : 'border-gray-600'
                                 }`}
                             placeholder="Ingresa la cédula del empleado"
                         />
+
+
+                        <button
+                            type="button"
+                            onClick={() => searchEmployee(formData.documentNumber)}
+                            className='px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer'
+                            disabled={isSearching || !formData.documentNumber.trim()}
+                            title='Buscar empleado'
+                            aria-label='Buscar empleado por cédula'
+                        >
+                            {isSearching ? 'Buscando...' : 'Buscar'}
+                        </button>
+
                         {isSearching && (
-                            <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"></div>
+                            <div className='absolute right-3 top-1/2 transform -translate-y-1/2'>
+                                <div className='animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500'></div>
                             </div>
                         )}
+
+
                     </div>
                     {errors.documentNumber && (
                         <p className="mt-1 text-sm text-red-400">{errors.documentNumber}</p>
