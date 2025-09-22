@@ -84,58 +84,118 @@ export default function Hero() {
                     )}
 
                     {result && (
-                        <div className="mt-8 text-left bg-gray-800/60 border border-gray-700 rounded-xl p-6">
-                            <h3 className="text-xl font-bold text-gray-100 mb-2">
-                                {result.firstName} {result.lastName}
-                            </h3>
-                            <p className="text-gray-300 mb-4">Cédula: {result.documentNumber}</p>
-
-                            {result.Reports.length === 0 ? (
-                                <p className="text-gray-300 mb-4">No hay reportes en la plataforma</p>
-                            ) : (
-                                <div className="space-y-4">
-                                    {result.Reports.map((r) => (
-                                        <div key={r.id} className="bg-gray-900/50 border border-gray-700 rounded-lg p-4">
-                                            <p className="text-gray-200 ">
-                                                <span className="font-semibold">Empleador demandado:</span> {r.User.firstName} {r.User.lastName}
-                                            </p>
-                                            <p className="text-gray-300">
-                                                <span className="font-semibold">Cédula del empleador demandado:</span> {r.User.documentNumber || "No disponible"}
-                                            </p>
-                                            <p className="text-gray-300">
-                                                <span>Email del empleador demandado:</span> {r.User.email}
-                                            </p>
-
-                                            <p className="text-gray-300">
-                                                <span className="font-semibold">Fecha de la demanda:</span> {new Date(r.incidentDate).toLocaleDateString()}
-                                            </p>
-                                            <p className="text-gray-300">
-                                                <span className="font-semibold">Ciudad:</span> {r.city}
-                                            </p>
-                                            <p className="text-gray-300">
-                                                <span className="font-semibold">Descripción:</span> {r.description}
-                                            </p>
-                                            {r.evidenceUrl && (
-                                                <a
-                                                    href={`htpp://localhost:3000${r.evidenceUrl.replace(/\\/g, '/')}`}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="text-blue-400 hover:text-blue-500 underline"
-                                                >
-                                                    Ver evidencia
-                                                </a>
-                                            )
-
-                                            }
-                                        </div>
-                                    ))}
-
+                        <div className="mt-8 bg-gray-800/60 border border-gray-700 rounded-2xl overflow-hidden shadow-2xl">
+                            {/* Header del empleado */}
+                            <div className="bg-gradient-to-r from-blue-600/20 to-cyan-600/20 border-b border-gray-700 p-6">
+                                <div className="flex items-center space-x-4">
+                                    <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                                        {result.firstName.charAt(0)}{result.lastName.charAt(0)}
+                                    </div>
+                                    <div>
+                                        <h3 className="text-2xl font-bold text-white mb-1">
+                                            {result.firstName} {result.lastName}
+                                        </h3>
+                                        <p className="text-gray-300 text-lg">Cédula: {result.documentNumber}</p>
+                                    </div>
                                 </div>
-                            )
+                            </div>
 
-                            }
+                            {/* Contenido principal */}
+                            <div className="p-6">
+                                {result.Reports.length === 0 ? (
+                                    <div className="text-center py-8">
+                                        <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                            <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </div>
+                                        <p className="text-xl text-gray-300 font-medium">No hay reportes en la plataforma</p>
+                                        <p className="text-gray-400 mt-2">Este empleado no presenta demandas laborales registradas</p>
+                                    </div>
+                                ) : (
+                                    <div className="space-y-6">
+                                        <div className="flex items-center justify-between mb-6">
+                                            <h4 className="text-xl font-semibold text-white">Reportes Laborales</h4>
+                                            <span className="bg-red-500/20 text-red-400 px-3 py-1 rounded-full text-sm font-medium">
+                                                {result.Reports.length} {result.Reports.length === 1 ? 'reporte' : 'reportes'}
+                                            </span>
+                                        </div>
+
+                                        {result.Reports.map((r, index) => (
+                                            <div key={r.id} className="bg-gray-900/50 border border-gray-700 rounded-xl p-6 hover:bg-gray-900/70 transition-all duration-200">
+                                                {/* Header del reporte */}
+                                                <div className="flex items-start justify-between mb-4">
+                                                    <div className="flex items-center space-x-3">
+                                                        <div className="w-8 h-8 bg-red-500/20 rounded-full flex items-center justify-center">
+                                                            <span className="text-red-400 font-bold text-sm">#{index + 1}</span>
+                                                        </div>
+                                                        <div>
+                                                            <h5 className="text-lg font-semibold text-white">Reporte Laboral</h5>
+                                                            <p className="text-gray-400 text-sm">Fecha: {new Date(r.incidentDate).toLocaleDateString('es-ES', {
+                                                                year: 'numeric',
+                                                                month: 'long',
+                                                                day: 'numeric'
+                                                            })}</p>
+                                                        </div>
+                                                    </div>
+                                                    <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded text-xs font-medium">
+                                                        Demanda
+                                                    </span>
+                                                </div>
+
+                                                {/* Información del empleador */}
+                                                <div className="bg-gray-800/50 rounded-lg p-4 mb-4">
+                                                    <h6 className="text-sm font-semibold text-gray-300 mb-3 uppercase tracking-wide">Empleador Demandado</h6>
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                        <div>
+                                                            <p className="text-xs text-gray-400 mb-1">Nombre</p>
+                                                            <p className="text-white font-medium">{r.User.firstName} {r.User.lastName}</p>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-xs text-gray-400 mb-1">Cédula</p>
+                                                            <p className="text-white font-medium">{r.User.documentNumber || "No disponible"}</p>
+                                                        </div>
+                                                        <div className="md:col-span-2">
+                                                            <p className="text-xs text-gray-400 mb-1">Email</p>
+                                                            <p className="text-white font-medium">{r.User.email}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Detalles del incidente */}
+                                                <div className="space-y-3">
+                                                    <div>
+                                                        <p className="text-xs text-gray-400 mb-1">Ciudad</p>
+                                                        <p className="text-white font-medium">{r.city}</p>
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-xs text-gray-400 mb-1">Descripción</p>
+                                                        <p className="text-gray-300 leading-relaxed">{r.description}</p>
+                                                    </div>
+
+                                                    {r.evidenceUrl && (
+                                                        <div className="pt-3 border-t border-gray-700">
+                                                            <a
+                                                                href={`http://localhost:3000${r.evidenceUrl.replace(/\\/g, '/')}`}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="inline-flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition-colors duration-200"
+                                                            >
+                                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                                </svg>
+                                                                <span className="font-medium">Ver evidencia</span>
+                                                            </a>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
                         </div>
-
                     )
                     }
 
