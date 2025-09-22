@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     incidentDate: DataTypes.DATE,
     city: DataTypes.STRING,
-    evidenceUrl: DataTypes.STRING
+    evidenceUrl: DataTypes.STRING,
+    status: { type: DataTypes.STRING, defaultValue: 'active' }
   }, {
     sequelize,
     modelName: 'Report',

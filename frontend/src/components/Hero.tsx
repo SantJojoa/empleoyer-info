@@ -4,6 +4,36 @@ import { Search } from "lucide-react";
 import { useUser } from "../contexts/UserContext";
 import { reportService, type EmployeeWithReports } from "../services/reportService";
 
+// Función auxiliar para obtener el estado de la demanda
+const getStatusInfo = (status: string) => {
+    switch (status) {
+        case 'active':
+            return {
+                text: 'Activa',
+                color: 'bg-red-500/20 text-red-400',
+                icon: '🔴'
+            };
+        case 'resolved':
+            return {
+                text: 'Resuelta',
+                color: 'bg-green-500/20 text-green-400',
+                icon: '✅'
+            };
+        case 'closed':
+            return {
+                text: 'Cerrada',
+                color: 'bg-gray-500/20 text-gray-400',
+                icon: '⚫'
+            };
+        default:
+            return {
+                text: 'Activa',
+                color: 'bg-red-500/20 text-red-400',
+                icon: '🔴'
+            };
+    }
+};
+
 
 
 export default function Hero() {
@@ -138,9 +168,14 @@ export default function Hero() {
                                                             })}</p>
                                                         </div>
                                                     </div>
-                                                    <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded text-xs font-medium">
-                                                        Demanda
-                                                    </span>
+                                                    <div className="flex items-center space-x-2 justify-center content-center">
+                                                        <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded text-xs font-medium">
+                                                            Demanda
+                                                        </span>
+                                                        <span className={`px-2 py-1 rounded text-xs font-medium ${getStatusInfo(r.status).color}`}>
+                                                            {getStatusInfo(r.status).text}
+                                                        </span>
+                                                    </div>
                                                 </div>
 
                                                 {/* Información del empleador */}
@@ -168,6 +203,17 @@ export default function Hero() {
                                                         <p className="text-xs text-gray-400 mb-1">Ciudad</p>
                                                         <p className="text-white font-medium">{r.city}</p>
                                                     </div>
+
+                                                    <div>
+                                                        <p className="text-xs text-gray-400 mb-1">Estado de la Demanda</p>
+                                                        <div className="flex items-center space-x-2">
+                                                            <span className="text-lg">{getStatusInfo(r.status).icon}</span>
+                                                            <span className={`px-2 py-1 rounded text-xs font-medium ${getStatusInfo(r.status).color}`}>
+                                                                {getStatusInfo(r.status).text}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
                                                     <div>
                                                         <p className="text-xs text-gray-400 mb-1">Descripción</p>
                                                         <p className="text-gray-300 leading-relaxed">{r.description}</p>
