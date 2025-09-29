@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
+import UnderConstruction from "./pages/UnderConstruction";
 import RegisterPage from "./pages/Register";
 import LoginPage from "./pages/Login";
 import Layout from "./components/Layout";
@@ -14,10 +15,13 @@ function App() {
         <BrowserRouter>
           <Layout>
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="*" element={<UnderConstruction />} />
+              { /** Rutas principales de la aplicación 
+              <Route path="/home" element={<HomePage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/reports" element={<ReportsPage />} />
+              */}
             </Routes>
           </Layout>
         </BrowserRouter>
