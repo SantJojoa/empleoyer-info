@@ -1,10 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
-import { Eye, EyeOff, Mail, Lock, AlertCircle, CheckCircle } from "lucide-react";
-import { validateEmail, validatePassword, sanitizeInput } from "../utils/validations";
-import { useTimeout } from "../hooks/useTimeout";
+import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 
 export default function LoginForm() {
     const navigate = useNavigate();
@@ -18,69 +16,19 @@ export default function LoginForm() {
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
-    const [validationErrors, setValidationErrors] = useState({
-        email: "",
-        password: "",
-    });
-    const [touchedFields, setTouchedFields] = useState({
-        email: false,
-        password: false,
-    });
-    const [isFormValid, setIsFormValid] = useState(false);
-
-    const { createTimeout, clearTimeout } = useTimeout();
-
-    // Validación en tiempo real solo para campos tocados
-    useEffect(() => {
-        const emailValidation = validateEmail(form.email);
-        const passwordValidation = validatePassword(form.password);
-
-        setValidationErrors({
-            email: touchedFields.email && !emailValidation.isValid ? emailValidation.message : "",
-            password: touchedFields.password && !passwordValidation.isValid ? passwordValidation.message : "",
-        });
-
-        setIsFormValid(emailValidation.isValid && passwordValidation.isValid && form.email.trim() !== "" && form.password.trim() !== "");
-    }, [form.email, form.password, touchedFields]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        const sanitizedValue = sanitizeInput(value);
-
-        setForm({ ...form, [name]: sanitizedValue });
+        setForm({ ...form, [e.target.name]: e.target.value });
         setError(""); // Limpiar error al escribir
-
-        // Marcar el campo como tocado cuando el usuario empieza a escribir
-        if (!touchedFields[name as keyof typeof touchedFields]) {
-            setTouchedFields(prev => ({
-                ...prev,
-                [name]: true
-            }));
-        }
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        // Validación final antes de enviar
-        if (!isFormValid) {
-            setError("Por favor, completa todos los campos correctamente");
-            return;
-        }
-
         setIsLoading(true);
         setError("");
-        clearTimeout(); // Limpiar timeout anterior
 
         try {
-            // Timeout para requests largos (30 segundos)
-            const timeoutPromise = new Promise((_, reject) => {
-                createTimeout(() => reject(new Error("Tiempo de espera agotado")), 30000);
-            });
-
-            const loginPromise = axios.post("http://localhost:3000/users/login", form);
-
-            const response = await Promise.race([loginPromise, timeoutPromise]) as any;
+            const response = await axios.post("http://localhost:3000/users/login", form);
 
             console.log("LoginForm - Response data:", response.data);
 
@@ -107,14 +55,11 @@ export default function LoginForm() {
         } catch (error: any) {
             console.error("Error al iniciar sesión:", error);
             setError(
-                error.message === "Tiempo de espera agotado"
-                    ? "La solicitud tardó demasiado. Intenta nuevamente."
-                    : error.response?.data?.message ||
-                    "Error al iniciar sesión. Verifica tus credenciales."
+                error.response?.data?.message ||
+                "Error al iniciar sesión. Verifica tus credenciales."
             );
         } finally {
             setIsLoading(false);
-            clearTimeout();
         }
     };
 
@@ -148,27 +93,10 @@ export default function LoginForm() {
                                     placeholder="tu@email.com"
                                     value={form.email}
                                     onChange={handleChange}
-                                    className={`w-full pl-10 pr-10 py-3 border rounded-xl focus:ring-2 focus:border-transparent transition-all duration-200 bg-gray-700/50 hover:bg-gray-700 focus:bg-gray-700 placeholder-gray-400 text-white ${validationErrors.email
-                                        ? 'border-red-500 focus:ring-red-400'
-                                        : form.email && !validationErrors.email
-                                            ? 'border-green-500 focus:ring-green-400'
-                                            : 'border-gray-600 focus:ring-blue-400'
-                                        }`}
+                                    className="w-full pl-10 pr-4 py-3 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 bg-gray-700/50 hover:bg-gray-700 focus:bg-gray-700 placeholder-gray-400 text-white"
                                     required
                                 />
-                                <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    {form.email && (
-                                        validationErrors.email ? (
-                                            <AlertCircle className="h-5 w-5 text-red-400" />
-                                        ) : (
-                                            <CheckCircle className="h-5 w-5 text-green-400" />
-                                        )
-                                    )}
-                                </div>
                             </div>
-                            {validationErrors.email && (
-                                <p className="text-red-400 text-xs mt-1">{validationErrors.email}</p>
-                            )}
                         </div>
 
                         <div className="space-y-1">
@@ -183,12 +111,7 @@ export default function LoginForm() {
                                     placeholder="••••••••"
                                     value={form.password}
                                     onChange={handleChange}
-                                    className={`w-full pl-10 pr-12 py-3 border rounded-xl focus:ring-2 focus:border-transparent transition-all duration-200 bg-gray-700/50 hover:bg-gray-700 focus:bg-gray-700 placeholder-gray-400 text-white ${validationErrors.password
-                                        ? 'border-red-500 focus:ring-red-400'
-                                        : form.password && !validationErrors.password
-                                            ? 'border-green-500 focus:ring-green-400'
-                                            : 'border-gray-600 focus:ring-blue-400'
-                                        }`}
+                                    className="w-full pl-10 pr-12 py-3 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200 bg-gray-700/50 hover:bg-gray-700 focus:bg-gray-700 placeholder-gray-400 text-white"
                                     required
                                 />
                                 <button
@@ -203,9 +126,6 @@ export default function LoginForm() {
                                     )}
                                 </button>
                             </div>
-                            {validationErrors.password && (
-                                <p className="text-red-400 text-xs mt-1">{validationErrors.password}</p>
-                            )}
                         </div>
 
                         <div className="flex items-center justify-between">
@@ -230,7 +150,7 @@ export default function LoginForm() {
 
                         <button
                             type="submit"
-                            disabled={isLoading || !isFormValid}
+                            disabled={isLoading}
                             className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-3 px-6 rounded-xl font-semibold hover:from-blue-600 hover:to-cyan-600 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-400/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                         >
                             {isLoading ? (
