@@ -16,18 +16,17 @@ function App() {
           <Layout>
             <Routes>
               <Route path="*" element={<UnderConstruction />} />
-              { /** Rutas principales de la aplicación 
-              <Route path="/home" element={<HomePage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/reports" element={<ReportsPage />} />
-              */}
-            </Routes>
-          </Layout>
-        </BrowserRouter>
-      </InactivityWrapper>
-    </UserProvider>
-  );
+/** Rutas principales de la aplicación
+<Route path="/home" element={<HomePage />} />
+<Route path="/register" element={<RegisterPage />} />
+<Route path="/login" element={<LoginPage />} />
+<Route path="/reports" element={<ReportsPage />} />
+</Routes>
+</Layout>
+</BrowserRouter>
+</InactivityWrapper>
+</UserProvider>
+);
 }
 
 export default App;
