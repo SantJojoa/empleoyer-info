@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
+//import HomePage from "./pages/HomePage";
 import UnderConstruction from "./pages/UnderConstruction";
-import RegisterPage from "./pages/Register";
-import LoginPage from "./pages/Login";
+//import RegisterPage from "./pages/Register";
+//import LoginPage from "./pages/Login";
 import Layout from "./components/Layout";
 import { UserProvider } from "./contexts/UserContext";
-import ReportsPage from "./pages/Reports";
+//import ReportsPage from "./pages/Reports";
 import InactivityWrapper from "./components/InactivityWrapper";
 
 function App() {
