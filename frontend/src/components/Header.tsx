@@ -12,7 +12,7 @@ export default function Header() {
 
     return (
         <header className="flex justify-between items-center px-6 py-4 shadow-2xl bg-gray-800/90 backdrop-blur-sm border-b border-gray-700/50 text-gray-100 relative">
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent cursor-pointer" onClick={() => navigate("/")}>EmployerInfo</h1>
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent cursor-pointer" onClick={() => navigate("/")}>Demandas.com</h1>
             {/* Navbar for desktop */}
             <nav className="hidden md:flex space-x-6 items-center">
                 {isAuthenticated ? (

@@ -17,6 +17,7 @@ export interface Report {
     incidentDate: string;
     city: string;
     evidenceUrl: string;
+    status: string;
     createdAt: string;
     User: {
         firstName: string;
@@ -45,6 +46,7 @@ export interface ReportWithEmployer {
     incidentDate: string;
     city: string;
     evidenceUrl: string | null;
+    status: string;
     createdAt: string;
     User: {
         firstName: string;
