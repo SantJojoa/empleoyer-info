@@ -11,7 +11,7 @@ function Landing() {
                 </h2>
                 <div className="max-w-2xl">
                     <h1 className="text-4xl md:text-6xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-cyan-200 to-indigo-300 drop-shadow-[0_0_16px_rgba(59,130,246,0.35)]">
-                        NUESTRA PAGINA ESTA EN CONSTRUCCION
+                        NUESTRO SITIO ESTA EN CONSTRUCCION
                     </h1>
 
                     <p className="text-lg md:text-xl text-gray-300 mb-1 mt-10">
