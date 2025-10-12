@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Menu, X, LogOut, FileText } from "lucide-react";
 import { useUser } from "../contexts/UserContext";
-import logo from "../../public/logo.svg";
 
 
 
@@ -14,7 +13,7 @@ export default function Header() {
         <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-gray-700 px-4 sm:px-10 py-3">
             <div className="flex items-center gap-4 text-white">
                 <div className="size-8 text-primary">
-                    <img src={logo} alt="Logo" className="size-8 text-primary" />
+                    <img src="/TuDemanda-Icon.png" alt="Logo" className="size-8 text-primary" />
 
                 </div>
                 <h2 className="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Tu Demanda</h2>
@@ -53,12 +52,23 @@ export default function Header() {
                 <>
                     <div className="hidden md:flex flex-1 justify-end gap-8">
                         <div className="flex items-center gap-9">
-                            <Link to="/about" className="text-gray-300 text-sm font-medium leading-normal">Acerca de</Link>
-                            <Link to="/contact" className="text-gray-300 text-sm font-medium leading-normal">Contáctenos</Link>
-                            <Link to="/login" className="text-gray-300 text-sm font-medium leading-normal">Iniciar Sesión</Link>
+                            <Link to="/about" className="relative text-gray-300 font-medium transition-colors duration-300 hover:text-blue-400
+                                after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px] after:w-0 
+                            after:bg-blue-400 after:transition-all after:duration-300 after:-translate-x-1/2 
+                            hover:after:w-full">Acerca de</Link>
+                            <Link to="/contact" className="relative text-gray-300 font-medium transition-colors duration-300 hover:text-blue-400
+                                after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px] after:w-0 
+                            after:bg-blue-400 after:transition-all after:duration-300 after:-translate-x-1/2 
+                            hover:after:w-full">Contáctenos</Link>
+                            <Link to="/login" className="relative text-gray-300 font-medium transition-colors duration-300 hover:text-blue-400
+                                after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px] after:w-0 
+                            after:bg-blue-400 after:transition-all after:duration-300 after:-translate-x-1/2 
+                            hover:after:w-full">Iniciar Sesión</Link>
                         </div>
 
-                        <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[-0.015em] transition-colors duration-200 hover:bg-primary/80">
+                        <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden 
+                                rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[-0.015em] 
+                                transition-all duration-200 hover:bg-primary/80 hover:scale-105 active:scale-95">
                             <span className="truncate">Subir Nueva Demanda</span>
                         </button>
                     </div>
@@ -106,7 +116,10 @@ export default function Header() {
                         <>
                             <Link
                                 to="/about"
-                                className="text-gray-300 hover-text-blue-400 transition-colors duration-200 font-medium"
+                                className="relative text-gray-300 font-medium transition-colors duration-300 hover:text-blue-400
+                                after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px] after:w-0 
+                            after:bg-blue-400 after:transition-all after:duration-300 after:-translate-x-1/2 
+                            hover:after:w-full"
                                 onClick={() => setMenuOpen(false)}
                             >
                                 Acerca de
@@ -114,7 +127,10 @@ export default function Header() {
 
                             <Link
                                 to="/contact"
-                                className="text-gray-300 hover-text-blue-400 transition-colors duration-200 font-medium"
+                                className="relative text-gray-300 font-medium transition-colors duration-300 hover:text-blue-400
+                                after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px] after:w-0 
+                            after:bg-blue-400 after:transition-all after:duration-300 after:-translate-x-1/2 
+                            hover:after:w-full"
                                 onClick={() => setMenuOpen(false)}
                             >
                                 Contáctenos

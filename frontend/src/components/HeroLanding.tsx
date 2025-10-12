@@ -18,10 +18,14 @@ export default function HeroLanding() {
                             <h2 className="text-gray-300 text-base font-normal leading-normal @[480px]:text-lg @[480px]:font-normal  @[480px]:leading-normal">Encuentra demandas laborales por o hacia una persona solo con su numero de cedula.</h2>
                         </div>
                         <div className="flex-wrap gap-3 flex">
-                            <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em]">
+                            <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden 
+                                rounded-lg h-12 px-5 bg-primary text-white text-sm font-bold leading-normal tracking-[-0.015em] 
+                                transition-all duration-200 hover:bg-primary/80 hover:scale-105 active:scale-95">
                                 <span className="truncate">Buscar Demanda</span>
                             </button>
-                            <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary/20 text-primary text-base font-bold leading-normal tracking-[0.015em]">
+                            <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden 
+                                rounded-lg h-12 px-5 bg-primary/20 text-primary text-sm font-bold leading-normal tracking-[-0.015em] 
+                                transition-all duration-200 hover:bg-primary/10 hover:text-primary/80 hover:scale-105 active:scale-95">
                                 <span className="truncate">Subir Demanda</span>
                             </button>
                         </div>
