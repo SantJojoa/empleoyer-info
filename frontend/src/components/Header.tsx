@@ -1,81 +1,85 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Menu, X, LogOut, FileText } from "lucide-react";
 import { useUser } from "../contexts/UserContext";
+import logo from "../../public/logo.svg";
 
 
 
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const navigate = useNavigate();
     const { user, logout, isAuthenticated } = useUser();
 
     return (
-        <header className="flex justify-between items-center px-6 py-4 shadow-2xl bg-gray-800/90 backdrop-blur-sm border-b border-gray-700/50 text-gray-100 relative">
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent cursor-pointer" onClick={() => navigate("/")}>Demandas.com</h1>
-            {/* Navbar for desktop */}
-            <nav className="hidden md:flex space-x-6 items-center">
-                {isAuthenticated ? (
-                    <>
-                        <div className="flex items-center space-x-4">
-                            <span className="text-gray-300">
-                                Hola, <span className="text-blue-400 font-semibold">{user?.firstName}</span>
+        <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-gray-700 px-4 sm:px-10 py-3">
+            <div className="flex items-center gap-4 text-white">
+                <div className="size-8 text-primary">
+                    <img src={logo} alt="Logo" className="size-8 text-primary" />
+
+                </div>
+                <h2 className="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Tu Demanda</h2>
+            </div>
+
+            {isAuthenticated ? (
+                <>
+
+                    <div className="flex flex-1 justify-end gap-4 md:gap-8 items-center">
+                        <span className="text-gray-300">
+                            Hola, <span className="text-primary font-semibold">{user?.firstName || 'Usuario'}
                             </span>
-                            <Link
-                                to="/reports"
-                                className="flex items-center space-x-2 px-4 py-2 bg-gray-700 text-white rounded-xl hover:bg-gray-600 transition-colors duration-200"
-                            >
-                                <FileText className="w-4 h-4" />
-                                <span>Subir Reportes</span>
-                            </Link>
-                            <button
-                                onClick={logout}
-                                className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors duration-200"
-                            >
-                                <LogOut className="w-4 h-4" />
-                                <span>Cerrar Sesión</span>
-                            </button>
+                        </span>
+                        <Link
+                            to="/reports"
+                            className="flex items-center space-x-2 px-4 py-2 bg-gray-700 text-white rounded-xl hover:bg-gray-600 transition-colors duration-200"
+                        >
+                            <FileText className="w-4 h-4" />
+                            <span>Subir Reportes</span>
+                        </Link>
+                        <button
+                            onClick={logout}
+                            className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors duration-200"
+                        >
+                            <LogOut className="w-4 h-4" />
+                            <span>Cerrar Sesión</span>
+                        </button>
+
+                    </div>
+
+
+
+
+                </>
+            ) : (
+                <>
+                    <div className="hidden md:flex flex-1 justify-end gap-8">
+                        <div className="flex items-center gap-9">
+                            <Link to="/about" className="text-gray-300 text-sm font-medium leading-normal">Acerca de</Link>
+                            <Link to="/contact" className="text-gray-300 text-sm font-medium leading-normal">Contáctenos</Link>
+                            <Link to="/login" className="text-gray-300 text-sm font-medium leading-normal">Iniciar Sesión</Link>
                         </div>
-                    </>
-                ) : (
-                    <>
-                        <Link
-                            to="/register"
-                            className="px-6 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-cyan-600 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
-                        >
-                            Crear cuenta
-                        </Link>
-                        <Link
-                            to="/login"
-                            className="text-gray-300 hover:text-blue-400 transition-colors duration-200 font-medium"
-                        >
-                            Iniciar sesión
-                        </Link>
-                        <Link
-                            to="/about"
-                            className="text-gray-300 hover:text-blue-400 transition-colors duration-200 font-medium"
-                        >
-                            Acerca de Nosotros
-                        </Link>
-                    </>
-                )}
-            </nav>
+
+                        <button className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[-0.015em] transition-colors duration-200 hover:bg-primary/80">
+                            <span className="truncate">Subir Nueva Demanda</span>
+                        </button>
+                    </div>
+
+                </>
+            )}
 
             {/* Hamburger menu for mobile */}
+
             <button
                 className="md:hidden text-gray-300 hover:text-blue-400 cursor-pointer transition-colors duration-200"
                 onClick={() => setMenuOpen(!menuOpen)}
             >
                 {menuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
-
-            {/* Mobile menu */}
             {menuOpen && (
-                <div className="absolute top-16 right-0 w-2/3 bg-gray-800/95 backdrop-blur-sm shadow-2xl rounded-l-2xl border border-gray-700/50 p-6 flex flex-col space-y-4 md:hidden" onClick={() => setMenuOpen(false)}>
+                <nav className="absolute top-16 right-0 w-2/3 bg-gray-800/95 backdrop-blur-sm shadow-2xl rounded-l-2xl border border-gray-700/50 p-6 flex flex-col space-y-4 md:hidden" onClick={() => setMenuOpen(false)}>
                     {isAuthenticated ? (
                         <>
                             <div className="text-gray-300 mb-2">
-                                Hola, <span className="text-blue-400 font-semibold">{user?.firstName}</span>
+                                Hola, <span className="text-blue-400 font-semibold">{user?.firstName || 'Usuario'}</span>
                             </div>
                             <Link
                                 to="/reports"
@@ -96,35 +100,52 @@ export default function Header() {
                                 <span>Cerrar Sesión</span>
                             </button>
                         </>
+
+
                     ) : (
                         <>
                             <Link
                                 to="/about"
-                                className="text-gray-300 hover:text-blue-400 transition-colors duration-200 font-medium"
+                                className="text-gray-300 hover-text-blue-400 transition-colors duration-200 font-medium"
                                 onClick={() => setMenuOpen(false)}
                             >
-                                Acerca de Nosotros
+                                Acerca de
                             </Link>
+
+                            <Link
+                                to="/contact"
+                                className="text-gray-300 hover-text-blue-400 transition-colors duration-200 font-medium"
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                Contáctenos
+
+                            </Link>
+
                             <Link
                                 to="/login"
-                                className="text-gray-300 hover:text-blue-400 transition-colors duration-200 font-medium"
+                                className="text-gray-300 hover-text-blue-400 transition-colors duration-200 font-medium"
                                 onClick={() => setMenuOpen(false)}
                             >
                                 Iniciar Sesión
+
                             </Link>
-                            <Link
-                                to="/register"
-                                className="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl hover:from-blue-600 hover:to-cyan-600 text-white font-semibold transition-all duration-200 transform hover:scale-105"
+
+                            <button
+                                className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[-0.015em] transition-colors duration-200 hover:bg-primary/80"
                                 onClick={() => setMenuOpen(false)}
                             >
-                                Crear Cuenta
-                            </Link>
-                        </>
-                    )}
-                </div>
-            )}
-        </header>
+                                <span className="truncate">Subir Nueva Demanda</span>
+                            </button>
 
+                        </>
+
+                    )
+                    }
+
+                </nav >
+            )}
+
+        </header >
 
 
     )
