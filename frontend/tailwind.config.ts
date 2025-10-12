@@ -17,7 +17,10 @@ const config: Config = {
             },
         },
     },
-    plugins: [],
+    plugins: [
+        require('@tailwindcss/forms'),
+        require('@tailwindcss/container-queries'), // 👈 este habilita el @container
+    ],
     content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 };
 
