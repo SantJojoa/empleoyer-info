@@ -27,6 +27,10 @@ export default function Header() {
                             Hola, <span className="text-primary font-semibold">{user?.firstName || 'Usuario'}
                             </span>
                         </span>
+                        <Link to="/" className="relative text-gray-300 font-medium transition-colors duration-300 hover:text-blue-400
+                                after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px] after:w-0 
+                            after:bg-blue-400 after:transition-all after:duration-300 after:-translate-x-1/2 
+                            hover:after:w-full">Ir al inicio</Link>
                         <Link
                             to="/reports"
                             className="flex items-center space-x-2 px-4 py-2 bg-gray-700 text-white rounded-xl hover:bg-gray-600 transition-colors duration-200"
@@ -51,7 +55,12 @@ export default function Header() {
             ) : (
                 <>
                     <div className="hidden md:flex flex-1 justify-end gap-8">
+
                         <div className="flex items-center gap-9">
+                            <Link to="/" className="relative text-gray-300 font-medium transition-colors duration-300 hover:text-blue-400
+                                after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px] after:w-0 
+                            after:bg-blue-400 after:transition-all after:duration-300 after:-translate-x-1/2 
+                            hover:after:w-full">Ir al inicio</Link>
                             <Link to="/about" className="relative text-gray-300 font-medium transition-colors duration-300 hover:text-blue-400
                                 after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px] after:w-0 
                             after:bg-blue-400 after:transition-all after:duration-300 after:-translate-x-1/2 
@@ -91,6 +100,10 @@ export default function Header() {
                             <div className="text-gray-300 mb-2">
                                 Hola, <span className="text-blue-400 font-semibold">{user?.firstName || 'Usuario'}</span>
                             </div>
+                            <Link to="/" className="relative text-gray-300 font-medium transition-colors duration-300 hover:text-blue-400
+                                after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px] after:w-0 
+                            after:bg-blue-400 after:transition-all after:duration-300 after:-translate-x-1/2 
+                            hover:after:w-full">Ir al inicio</Link>
                             <Link
                                 to="/reports"
                                 className="flex items-center space-x-2 text-gray-300 hover:text-blue-400 transition-colors duration-200 font-medium"
@@ -114,6 +127,10 @@ export default function Header() {
 
                     ) : (
                         <>
+                            <Link to="/" className="relative text-gray-300 font-medium transition-colors duration-300 hover:text-blue-400
+                                after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px] after:w-0 
+                            after:bg-blue-400 after:transition-all after:duration-300 after:-translate-x-1/2 
+                            hover:after:w-full">Ir al inicio</Link>
                             <Link
                                 to="/about"
                                 className="relative text-gray-300 font-medium transition-colors duration-300 hover:text-blue-400
