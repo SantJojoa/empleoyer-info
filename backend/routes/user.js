@@ -29,16 +29,42 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     try {
         const user = await User.findOne({ where: { email } });
-        if (!user) return res.status(401).json({ message: 'User not found or wrong password' });
 
-        const valid = await bcrypt.compare(password, user.passwordHash);
-        if (!valid) return res.status(401).json({ message: 'User not found or wrong password' });
+        if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
+            return res.status(401).json({
+                success: false,
+                code: 'INVALID CREDENTIALS',
+                message: 'Correo o contraseña incorrectas'
+            });
+        }
 
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-        res.json({ user, token });
+        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET,
+            {
+                expiresIn: '7d'
+
+            });
+
+
+        res.json({
+            success: true,
+            user: {
+                id: user.id,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                phone: user.phone,
+                birthDate: user.birthDate,
+                role: user.role
+            },
+            token
+        });
     } catch (error) {
-        console.error(error);
-        res.status(400).json({ error: error.message });
+        console.error('Login error:', error);
+        res.status(400).json({
+            success: false,
+            code: 'SERVER ERROR',
+            message: 'Hubo un problema en el servidor. Intenta nuevamente más tarde',
+        });
 
     }
 });
