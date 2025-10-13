@@ -21,31 +21,22 @@ export default function Header() {
 
             {isAuthenticated ? (
                 <>
+                    <div className="hidden md:flex flex-1 justify-end gap-8">
 
-                    <div className="flex flex-1 justify-end gap-4 md:gap-8 items-center">
-                        <span className="text-gray-300">
-                            Hola, <span className="text-primary font-semibold">{user?.firstName || 'Usuario'}
-                            </span>
-                        </span>
-                        <Link to="/" className="relative text-gray-300 font-medium transition-colors duration-300 hover:text-blue-400
-                                after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px] after:w-0 
-                            after:bg-blue-400 after:transition-all after:duration-300 after:-translate-x-1/2 
-                            hover:after:w-full">Ir al inicio</Link>
-                        <Link
-                            to="/reports"
-                            className="flex items-center space-x-2 px-4 py-2 bg-gray-700 text-white rounded-xl hover:bg-gray-600 transition-colors duration-200"
-                        >
-                            <FileText className="w-4 h-4" />
-                            <span>Subir Reportes</span>
-                        </Link>
-                        <button
-                            onClick={logout}
-                            className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors duration-200"
-                        >
-                            <LogOut className="w-4 h-4" />
-                            <span>Cerrar Sesión</span>
-                        </button>
 
+                        <div className="flex items-center gap-4">
+                            <span className="text-[#92adc9] text-sm">{user?.planType}</span>
+
+                            <button className="flex items-center gap-2  text-white hover:text-primary">
+                                <span className="material-symbols-outlined">account_circle</span>
+                                <span >{user?.firstName}</span>
+                            </button>
+
+                            <button onClick={logout} className="flex items-center justify-center h-10 w-10 cursor-pointer rounded-full bg-card-dark text-white hover:bg-primary/90 transition-colors duration-200">
+                                <span className="material-symbols-outlined">logout</span>
+                            </button>
+
+                        </div>
                     </div>
 
 
@@ -54,7 +45,7 @@ export default function Header() {
                 </>
             ) : (
                 <>
-                    <div className="hidden md:flex flex-1 justify-end gap-8">
+                    <div className="md:hidden flex flex-1 justify-end gap-8">
 
                         <div className="flex items-center gap-9">
                             <Link to="/" className="relative text-gray-300 font-medium transition-colors duration-300 hover:text-blue-400
@@ -97,31 +88,23 @@ export default function Header() {
                 <nav className="absolute top-16 right-0 w-2/3 bg-gray-800/95 backdrop-blur-sm shadow-2xl rounded-l-2xl border border-gray-700/50 p-6 flex flex-col space-y-4 md:hidden" onClick={() => setMenuOpen(false)}>
                     {isAuthenticated ? (
                         <>
-                            <div className="text-gray-300 mb-2">
-                                Hola, <span className="text-blue-400 font-semibold">{user?.firstName || 'Usuario'}</span>
-                            </div>
-                            <Link to="/" className="relative text-gray-300 font-medium transition-colors duration-300 hover:text-blue-400
-                                after:content-[''] after:absolute after:left-1/2 after:bottom-0 after:h-[2px] after:w-0 
-                            after:bg-blue-400 after:transition-all after:duration-300 after:-translate-x-1/2 
-                            hover:after:w-full">Ir al inicio</Link>
-                            <Link
-                                to="/reports"
-                                className="flex items-center space-x-2 text-gray-300 hover:text-blue-400 transition-colors duration-200 font-medium"
-                                onClick={() => setMenuOpen(false)}
-                            >
-                                <FileText className="w-4 h-4" />
-                                <span>Subir Reportes</span>
-                            </Link>
-                            <button
-                                onClick={() => {
-                                    logout();
-                                    setMenuOpen(false);
-                                }}
-                                className="flex items-center space-x-2 text-red-400 hover:text-red-300 transition-colors duration-200 font-medium"
-                            >
-                                <LogOut className="w-4 h-4" />
-                                <span>Cerrar Sesión</span>
+
+                            {/* Botón perfil */}
+                            <button className="flex items-center gap-2 text-white hover:text-primary py-2 px-4 rounded-lg w-full justify-start">
+                                <span className="material-symbols-outlined">account_circle</span>
+                                <span>{user?.firstName}</span>
                             </button>
+
+                            <span className="flex items-center pl-6 text-[#92adc9] text-sm mb-5">{user?.planType}</span>
+                            {/* Botón logout */}
+                            <button
+                                onClick={logout}
+                                className="flex items-center justify-start gap-2 py-2 px-4 rounded-lg bg-card-dark text-white hover:bg-primary/90 transition-colors duration-200 w-full"
+                            >
+                                <span className="material-symbols-outlined">logout</span>
+                                <span>Cerrar sesión</span>
+                            </button>
+
                         </>
 
 

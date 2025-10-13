@@ -1,5 +1,9 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 
+interface Subscription {
+    planType: string;
+
+}
 interface User {
     id: number;
     email: string;
@@ -8,6 +12,7 @@ interface User {
     phone: string;
     birthDate: string;
     role: string;
+    planType?: string;
 }
 
 interface UserContextType {

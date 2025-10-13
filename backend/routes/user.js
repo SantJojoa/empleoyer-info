@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { User } = require('../models');
+const { User, Subscription } = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authMiddleware = require('../middlewares/auth');
@@ -28,7 +28,14 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     try {
-        const user = await User.findOne({ where: { email } });
+        const user = await User.findOne({
+            where: { email },
+            include: [{
+                model: Subscription,
+                as: 'subscription',
+                attributes: ['planType']
+            }]
+        });
 
         if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
             return res.status(401).json({
@@ -54,7 +61,8 @@ router.post('/login', async (req, res) => {
                 lastName: user.lastName,
                 phone: user.phone,
                 birthDate: user.birthDate,
-                role: user.role
+                role: user.role,
+                planType: user.subscription?.planType || 'null'
             },
             token
         });
